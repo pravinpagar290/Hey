@@ -1,5 +1,5 @@
 {
-  "name": "hau",
+  "name": "hay",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-email/components": "^1.0.6",
+    "@react-email/render": "^2.0.4",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "mongoose": "^9.1.5",

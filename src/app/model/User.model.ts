@@ -1,4 +1,3 @@
-import { create } from "domain";
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface Message extends Document {
@@ -19,7 +18,7 @@ const MessageSchema: Schema<Message> = new Schema({
 });
 
 export interface User extends Document {
-  userName: string;
+  username: string;
   password: string;
   email: string;
   isVerified: boolean;
@@ -31,10 +30,11 @@ export interface User extends Document {
 }
 
 const UserSchema: Schema<User> = new Schema({
-  userName: {
+  username: {
     type: String,
-    unique: true,
     required: true,
+    unique: true,
+    trim: true,
   },
   password: {
     type: String,

@@ -2,6 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/app/model/User.model";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationCode";
+import { log } from "console";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -9,8 +10,21 @@ export async function POST(request: Request) {
   try {
     const { username, email, password } = await request.json();
 
+    if(!username || !email || !password){
+      return Response.json(
+        {
+          success: false,
+          message: "username, email and password are required",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+    console.log(username, email, password);
+
     const existingUserVerifiedByUsername = await UserModel.findOne({
-      userName: username,
+      username: username,
       isVerified: true,
     });
 
@@ -53,7 +67,7 @@ export async function POST(request: Request) {
       const expiryDate = new Date();
       expiryDate.setHours(expiryDate.getHours() + 1);
       const newUser = new UserModel({
-        userName: username,
+        username: username,
         password: hashedPassword,
         email: email,
         isVerified: false,
