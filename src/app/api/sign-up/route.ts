@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   try {
     const { username, email, password } = await request.json();
 
-    if(!username || !email || !password){
+    if (!username || !email || !password) {
       return Response.json(
         {
           success: false,
