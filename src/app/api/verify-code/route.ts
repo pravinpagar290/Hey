@@ -17,45 +17,42 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
-    const isCodeValid=user.verifyCode===code
-    const isCodeNotExpiry=  new Date(user.verifyCodeExpiry)>new Date()
+    const isCodeValid = user.verifyCode === code;
+    const isCodeNotExpiry = new Date(user.verifyCodeExpiry) > new Date();
 
-    if(isCodeNotExpiry && isCodeValid)
-    {
-        user.isVerified=true,
-        await user.save()
+    if (isCodeNotExpiry && isCodeValid) {
+      ((user.isVerified = true), await user.save());
 
-        return Response.json(
-      {
-        success: true,
-        message: "Account successfully verified",
-      },
-      {
-        status: 200,
-      },
-    );
-    }else if(!isCodeNotExpiry){
-        return Response.json(
-      {
-        success: false,
-        message: "code is expired",
-      },
-      {
-        status: 500,
-      },
-    );
-    }else  if(!isCodeValid){
-        return Response.json(
-      {
-        success: false,
-        message: "invalid code",
-      },
-      {
-        status: 500,
-      },
-    );
+      return Response.json(
+        {
+          success: true,
+          message: "Account successfully verified",
+        },
+        {
+          status: 200,
+        },
+      );
+    } else if (!isCodeNotExpiry) {
+      return Response.json(
+        {
+          success: false,
+          message: "code is expired",
+        },
+        {
+          status: 500,
+        },
+      );
+    } else if (!isCodeValid) {
+      return Response.json(
+        {
+          success: false,
+          message: "invalid code",
+        },
+        {
+          status: 500,
+        },
+      );
     }
-
   } catch (error) {
     console.log("Error checking username", error);
     return Response.json(
